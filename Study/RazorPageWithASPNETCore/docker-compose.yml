@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  myrazorpage:
+    image: ${DOCKER_REGISTRY}myrazorpage
+    build:
+      context: .
+      dockerfile: MyRazorPage\Dockerfile
