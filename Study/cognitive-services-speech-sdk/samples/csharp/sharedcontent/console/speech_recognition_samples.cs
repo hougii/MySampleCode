@@ -16,9 +16,9 @@ namespace MicrosoftSpeechSDKSamples
     public class SpeechRecognitionSamples
     {
         /// <summary>
-        /// 統一Config訂閱資訊2f88
+        /// 統一Config訂閱資訊
         /// </summary>
-        static SpeechConfig _config = SpeechConfig.FromSubscription("adfcfc824858a77608090c25daa1", "westus"); 
+        static SpeechConfig _config = SpeechConfig.FromSubscription("2f88adfcfc824858a77608090c25daa1", "westus"); 
 
         // Speech recognition from microphone.
         public static async Task RecognitionWithMicrophoneAsync()
@@ -185,11 +185,18 @@ namespace MicrosoftSpeechSDKSamples
                     // Subscribes to events.
                     recognizer.Recognizing += (s, e) =>
                     {
+#if true //原始寫每一行的
                         Console.WriteLine($"RECOGNIZING: Text={e.Result.Text}");
+#endif
+#if false //改寫為一直over write
+                        Console.SetCursorPosition(0, Console.CursorTop);
+                        Console.Write($"RECOGNIZING: Text={e.Result.Text}");
+#endif
                     };
 
                     recognizer.Recognized += (s, e) =>
                     {
+                        Console.WriteLine();
                         if (e.Result.Reason == ResultReason.RecognizedSpeech)
                         {
                             Console.WriteLine($"RECOGNIZED: Text={e.Result.Text}");
@@ -311,6 +318,62 @@ namespace MicrosoftSpeechSDKSamples
                 }
             }
             // </recognitionAudioStream>
+        }
+
+        //用麥克風可以持續的講話(and output)，一直到關鍵字後才停止
+        public static async Task ContinuousRecognitionWithMicrophoneAsync() {
+            var config = _config;
+            config.SpeechRecognitionLanguage = "zh-TW";
+            var stopFlag = new TaskCompletionSource<int>();
+            int count = 0;
+            using (var recognizer = new SpeechRecognizer(config)) {
+                
+                #region Register Events
+                //解析中
+                recognizer.Recognizing += (s, e) =>
+                {
+                    Console.SetCursorPosition(0, Console.CursorTop);
+                    Console.Write($"RECOGNIZING: Text={e.Result.Text}");
+                };
+                
+                //解析完成
+                recognizer.Recognized += (s, e) =>
+                {
+                    Console.WriteLine();
+                    if (e.Result.Reason == ResultReason.RecognizedSpeech)
+                    {
+                        Console.WriteLine($"RECOGNIZED: Text={e.Result.Text}");
+                    }
+                    else if (e.Result.Reason == ResultReason.NoMatch)
+                    {
+                        Console.WriteLine($"NOMATCH: Speech could not be recognized.");
+                    }
+                    if (count == 10) {
+                        stopFlag.TrySetResult(0);
+                    }
+                    count++;
+                };
+                recognizer.Canceled += (s, e) =>
+                {
+                    Console.WriteLine($"CANCELED: Reason={e.Reason}");
+                };
+
+                recognizer.SessionStarted += (s, e) =>
+                {
+                    Console.WriteLine("\n    Session started event.");
+                };
+
+                recognizer.SessionStopped += (s, e) =>
+                {
+                    Console.WriteLine("\n    Session stopped event.");
+                };
+                #endregion
+
+                await recognizer.StartContinuousRecognitionAsync().ConfigureAwait(false);
+                Task.WaitAny(new[] { stopFlag.Task });//??當有值時就會停止?
+                await recognizer.StopContinuousRecognitionAsync().ConfigureAwait(false);
+            }
+
         }
     }
 }

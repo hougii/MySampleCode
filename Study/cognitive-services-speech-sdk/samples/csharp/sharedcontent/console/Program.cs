@@ -25,6 +25,7 @@ namespace MicrosoftSpeechSDKSamples
             Console.WriteLine("3. Speech continuous recognition with file input.");
             Console.WriteLine("4. Speech recognition using customized model.");
             Console.WriteLine("5. Speech recognition with audio stream.");
+            Console.WriteLine("X. 持續的中文麥克風輸入");
             Console.WriteLine("-----------------------------------------");
             Console.WriteLine("6. Translation with microphone input.");
             Console.WriteLine("7. Translation with file input.");
@@ -59,6 +60,10 @@ namespace MicrosoftSpeechSDKSamples
                     case ConsoleKey.D5:
                         SpeechRecognitionSamples.RecognitionWithAudioStreamAsync().Wait();
                         break;
+                    case ConsoleKey.X:
+                        SpeechRecognitionSamples.ContinuousRecognitionWithMicrophoneAsync().Wait();
+                        break;
+
                     case ConsoleKey.D6:
                         TranslationSamples.TranslationWithMicrophoneAsync().Wait();
                         break;
