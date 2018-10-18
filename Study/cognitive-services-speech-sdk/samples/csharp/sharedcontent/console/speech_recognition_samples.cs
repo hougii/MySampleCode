@@ -5,6 +5,7 @@
 
 // <toplevel>
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
@@ -14,6 +15,11 @@ namespace MicrosoftSpeechSDKSamples
 {
     public class SpeechRecognitionSamples
     {
+        /// <summary>
+        /// 統一Config訂閱資訊2f88
+        /// </summary>
+        static SpeechConfig _config = SpeechConfig.FromSubscription("adfcfc824858a77608090c25daa1", "westus"); 
+
         // Speech recognition from microphone.
         public static async Task RecognitionWithMicrophoneAsync()
         {
@@ -21,7 +27,7 @@ namespace MicrosoftSpeechSDKSamples
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
             // The default language is "en-us".
-            var config = SpeechConfig.FromSubscription("YourSubscriptionKey", "YourServiceRegion");
+            var config = _config;
 
             // Creates a speech recognizer using microphone as audio input.
             using (var recognizer = new SpeechRecognizer(config))
@@ -64,10 +70,11 @@ namespace MicrosoftSpeechSDKSamples
             // <recognitionWithLanguageAndDetailedOutputFormat>
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription("YourSubscriptionKey", "YourServiceRegion");
+            var config = _config;
+            //var config = SpeechConfig.FromSubscription("YourSubscriptionKey", "YourServiceRegion");
 
             // Replace the language with your language in BCP-47 format, e.g., en-US.
-            var language = "de-DE";
+            var language = "zh-TW";
             config.SpeechRecognitionLanguage = language;
             config.OutputFormat = OutputFormat.Detailed;
 
@@ -86,6 +93,7 @@ namespace MicrosoftSpeechSDKSamples
                 // Checks result.
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
+                    //Console.OutputEncoding = Encoding.UTF8;
                     Console.WriteLine($"RECOGNIZED: Text={result.Text}");
                     Console.WriteLine("  DETAILED RESULTS:");
 
@@ -120,7 +128,7 @@ namespace MicrosoftSpeechSDKSamples
             // <recognitionCustomized>
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription("YourSubscriptionKey", "YourServiceRegion");
+            var config = _config;
             // Replace with the CRIS endpoint id of your customized model.
             config.EndpointId = "YourEndpointId";
 
@@ -164,7 +172,7 @@ namespace MicrosoftSpeechSDKSamples
             // <recognitionContinuousWithFile>
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription("YourSubscriptionKey", "YourServiceRegion");
+            var config = _config;
 
             var stopRecognition = new TaskCompletionSource<int>();
 
@@ -237,7 +245,7 @@ namespace MicrosoftSpeechSDKSamples
             // <recognitionAudioStream>
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
-            var config = SpeechConfig.FromSubscription("YourSubscriptionKey", "YourServiceRegion");
+            var config = _config;
 
             var stopRecognition = new TaskCompletionSource<int>();
 

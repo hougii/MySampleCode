@@ -4,6 +4,7 @@
 //
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CognitiveServices.Speech;
 
@@ -13,16 +14,23 @@ namespace MicrosoftSpeechSDKSamples
     {
         static void Main(string[] args)
         {
-
+            //Outputter
+            Console.OutputEncoding = System.Text.Encoding.GetEncoding(950);
+            //Console.OutputEncoding =Encoding.Unicode;
+            //Console.OutputEncoding = Encoding.UTF8;
+            
+            Console.WriteLine("¤¤¤å¦r");
             Console.WriteLine("1. Speech recognition with microphone input.");
             Console.WriteLine("2. Speech recognition in the specified language and using detailed output format.");
             Console.WriteLine("3. Speech continuous recognition with file input.");
             Console.WriteLine("4. Speech recognition using customized model.");
             Console.WriteLine("5. Speech recognition with audio stream.");
+            Console.WriteLine("-----------------------------------------");
             Console.WriteLine("6. Translation with microphone input.");
             Console.WriteLine("7. Translation with file input.");
             Console.WriteLine("8. Translation with audio stream.");
             Console.WriteLine("9. Speech continuous recognition using authorization token.");
+            Console.WriteLine("-----------------------------------------");
             Console.WriteLine("A. Intent recognition with microphone input.");
             Console.WriteLine("B. Intent continuous recognition with file input.");
             Console.WriteLine("C. Intent recognition in the specified language with microphone input.");
