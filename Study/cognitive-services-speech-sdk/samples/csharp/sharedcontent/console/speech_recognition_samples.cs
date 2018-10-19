@@ -361,6 +361,7 @@ namespace MicrosoftSpeechSDKSamples
                 recognizer.SessionStarted += (s, e) =>
                 {
                     Console.WriteLine("\n    Session started event.");
+                    Console.WriteLine("\n    可開始說話.....");
                 };
 
                 recognizer.SessionStopped += (s, e) =>

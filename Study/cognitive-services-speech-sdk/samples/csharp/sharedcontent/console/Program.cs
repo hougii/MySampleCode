@@ -20,18 +20,19 @@ namespace MicrosoftSpeechSDKSamples
             //Console.OutputEncoding = Encoding.UTF8;
             
             Console.WriteLine("中文字");
+            Console.WriteLine("-----------------[語音轉文字]------------------------");
             Console.WriteLine("1. Speech recognition with microphone input.");
             Console.WriteLine("2. Speech recognition in the specified language and using detailed output format.");
             Console.WriteLine("3. Speech continuous recognition with file input.");
             Console.WriteLine("4. Speech recognition using customized model.");
             Console.WriteLine("5. Speech recognition with audio stream.");
             Console.WriteLine("X. 持續的中文麥克風輸入");
-            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("-----------------[翻譯轉換]------------------------");
             Console.WriteLine("6. Translation with microphone input.");
             Console.WriteLine("7. Translation with file input.");
             Console.WriteLine("8. Translation with audio stream.");
             Console.WriteLine("9. Speech continuous recognition using authorization token.");
-            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("-----------------[語音分析]------------------------");
             Console.WriteLine("A. Intent recognition with microphone input.");
             Console.WriteLine("B. Intent continuous recognition with file input.");
             Console.WriteLine("C. Intent recognition in the specified language with microphone input.");

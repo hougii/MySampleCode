@@ -15,6 +15,12 @@ namespace MicrosoftSpeechSDKSamples
 {
     public class IntentRecognitionSamples
     {
+        private static SpeechConfig _myLuisConfig =
+            //SpeechConfig.FromSubscription("9daca013c5ee45578dd76ea9da620288", "westus");//Use LUIS Key & Region (cannot use "Start_Key",it is not contain speech api)
+            //SpeechConfig.FromSubscription("138b99fac85f45a5a6ed9c2dc733f9bb", "eastus2");//Azure Key& Region
+            SpeechConfig.FromSubscription("771620d0adef4c889e0672c838546fad", "westus");//Azure Key
+        private static string _myAppId = "fb2035fe-847a-42f7-8136-eb89e5545140";
+        private static string _myLanguage = "zh-TW";
         // Intent recognition using microphone.
         public static async Task RecognitionWithMicrophoneAsync()
         {
@@ -27,16 +33,18 @@ namespace MicrosoftSpeechSDKSamples
             // Once you've obtained it, replace with below with your own Language Understanding subscription key
             // and service region (e.g., "westus").
             // The default language is "en-us".
-            var config = SpeechConfig.FromSubscription("YourLanguageUnderstandingSubscriptionKey", "YourLanguageUnderstandingServiceRegion");
-
+            var config = _myLuisConfig;//SpeechConfig.FromSubscription("YourLanguageUnderstandingSubscriptionKey", "YourLanguageUnderstandingServiceRegion");
+            config.SpeechRecognitionLanguage = _myLanguage;
             // Creates an intent recognizer using microphone as audio input.
             using (var recognizer = new IntentRecognizer(config))
             {
                 // Creates a Language Understanding model using the app id, and adds specific intents from your model
-                var model = LanguageUnderstandingModel.FromAppId("YourLanguageUnderstandingAppId");
-                recognizer.AddIntent(model, "YourLanguageUnderstandingIntentName1", "id1");
-                recognizer.AddIntent(model, "YourLanguageUnderstandingIntentName2", "id2");
-                recognizer.AddIntent(model, "YourLanguageUnderstandingIntentName3", "any-IntentId-here");
+                var model = LanguageUnderstandingModel.FromAppId(_myAppId);
+                recognizer.AddIntent(model, "打招呼", "mytype1");
+                recognizer.AddIntent(model, "回答-已繳款", "mytype1");
+                recognizer.AddIntent(model, "回答-未繳款", "mytype1");
+                //recognizer.AddIntent(model, "YourLanguageUnderstandingIntentName2", "id2");
+                //recognizer.AddIntent(model, "YourLanguageUnderstandingIntentName3", "any-IntentId-here");
 
                 // Starts recognizing.
                 Console.WriteLine("Say something...");
